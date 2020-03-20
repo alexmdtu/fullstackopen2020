@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 const Title = ({ text }) => <h1>{text}</h1>
 
-const FeedbackStats = ({ text, number }) => {
+const Statistic = ({ text, number }) => {
     return (
         <p>{text} {number} {text == 'positive' ? '%' : ''}</p>
     )
@@ -22,12 +22,12 @@ const Statistics = ({ good, neutral, bad }) => {
     return (
         <>
             <Title text='statistics' />
-            <FeedbackStats text='good' number={good} />
-            <FeedbackStats text='neutral' number={neutral} />
-            <FeedbackStats text='bad' number={bad} />
-            <FeedbackStats text='all' number={good + neutral + bad} />
-            <FeedbackStats text='average' number={(good - bad) / (good + neutral + bad)} />
-            <FeedbackStats text='positive' number={good / (good + neutral + bad) * 100} />
+            <Statistic text='good' number={good} />
+            <Statistic text='neutral' number={neutral} />
+            <Statistic text='bad' number={bad} />
+            <Statistic text='all' number={good + neutral + bad} />
+            <Statistic text='average' number={(good - bad) / (good + neutral + bad)} />
+            <Statistic text='positive' number={good / (good + neutral + bad) * 100} />
         </>
     )
 }
@@ -45,9 +45,7 @@ const App = () => {
     const [bad, setBad] = useState(0)
 
     const handleGoodClick = () => setGood(good + 1)
-
     const handleNeutralClick = () => setNeutral(neutral + 1)
-
     const handleBadClick = () => setBad(bad + 1)
 
     return (
