@@ -5,11 +5,20 @@ const Title = ({ text }) => <h1>{text}</h1>
 
 const FeedbackStats = ({ text, number }) => {
     return (
-        <p>{text} {isNaN(number) ? 0 : number} {text == 'positive' ? '%' : ''}</p>
+        <p>{text} {number} {text == 'positive' ? '%' : ''}</p>
     )
 }
 
 const Statistics = ({ good, neutral, bad }) => {
+    if (good + neutral + bad == 0) {
+        return (
+            <>
+                <Title text='statistics' />
+                <p>No feedback given</p>
+            </>
+        )
+    }
+
     return (
         <>
             <Title text='statistics' />
