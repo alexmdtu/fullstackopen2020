@@ -13,6 +13,25 @@ const VoteCount = ({ votes, selected }) => {
     )
 }
 
+const Title = ({ text }) => <h1>{text}</h1>
+
+const MostVote = ({ votes }) => {
+    let i = votes.indexOf(Math.max(...votes));
+
+    if (votes[i] == 0) {
+        return null
+    }
+
+    return (
+        <>
+            <Title text='Anecdote with most votes' />
+            <Quote selected={i} />
+        </>
+    )
+}
+
+const Quote = ({ selected }) => <p>{anecdotes[selected]}</p>
+
 const App = (props) => {
     const [selected, setSelected] = useState(0)
     const [votes, setVote] = useState(new Array(anecdotes.length).fill(0))
@@ -29,10 +48,12 @@ const App = (props) => {
 
     return (
         <div>
-            <p>{props.anecdotes[selected]}</p>
+            <Title text='Anecdote of the day' />
+            <Quote selected={selected} />
             <VoteCount votes={votes} selected={selected} />
             <Button onClick={handleVote} text='vote' />
             <Button onClick={handleSelected} text='next anectdote' />
+            <MostVote votes={votes} />
         </div>
     )
 }
