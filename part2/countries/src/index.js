@@ -11,7 +11,7 @@ const Countries = ({ countries, filter }) => {
     )
   } else if (filteredCountries.length > 1) {
     return (
-      filteredCountries.map(country => <p key={country.name}>{country.name}</p>)
+      filteredCountries.map(country => <CountryAndButton key={country.name} country={country} />)
     )
   } else if (filteredCountries.length > 0) {
     return (
@@ -20,6 +20,35 @@ const Countries = ({ countries, filter }) => {
   }
   return (
     <p></p>
+  )
+}
+
+const CountryAndButton = ({ country }) => {
+  const [showCountry, setShowCountry] = useState(false)
+
+  const handleShowClick = () => {
+    setShowCountry(!showCountry)
+  }
+
+  if (showCountry) {
+    return (
+      <>
+        <p>
+          {country.name}
+          <button onClick={handleShowClick}>hide</button>
+        </p>
+        <Country country={country} />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <p>
+        {country.name}
+        <button onClick={handleShowClick}>show</button>
+      </p>
+    </>
   )
 }
 
@@ -33,7 +62,7 @@ const Country = ({ country }) => {
       <ul>
         {country.languages.map(language => <li key={language.name}>{language.name}</li>)}
       </ul>
-      <img src={country.flag} width="200px" />
+      <img src={country.flag} alt={country.name} width="200px" />
     </div>
 
   )
