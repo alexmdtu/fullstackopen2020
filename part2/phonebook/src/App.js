@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 import personService from './services/personService'
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
+    const [notificationMessage, setNotificationMessage] = useState(null)
 
     const numberToShow = filter === '' ? persons : persons.filter(person => person.name.toLowerCase().includes(filter))
 
@@ -19,6 +21,13 @@ const App = () => {
                 setPersons(allPersons)
             })
     }, [])
+
+    const setNotification = (message) => {
+        setNotificationMessage(message)
+        setTimeout(() => {
+            setNotificationMessage(null)
+        }, 5000)
+    }
 
     const addNumber = (event) => {
         event.preventDefault()
@@ -34,9 +43,11 @@ const App = () => {
                     setPersons(persons.concat(returnedPerson))
                     setNewName('')
                     setNewNumber('')
+                    setNotification(`added ${returnedPerson.name}`)
                 })
         } else {
             updateEntry(persons.find(person => person.name === newName).id)
+            setNotification(`updated number of ${newName}`)
             setNewName('')
             setNewNumber('')
         }
@@ -56,14 +67,15 @@ const App = () => {
         if (window.confirm(`Do you want to delete ${persons.find(person => person.id === id).name}?`)) {
             personService
                 .deleteEntry(id)
-                .then(
+                .then(() => {
+                    setNotification(`deleted ${persons.find(person => person.id === id).name}`)
                     setPersons(persons.filter(person => person.id !== id))
-                )
+                })
         }
     }
 
     const updateEntry = (id) => {
-        if (window.confirm(`${persons.find(person => person.id === id).name} is already in the phonebook. Do you want to replace the old number with a new one?`)) {
+        if (window.confirm(`${persons.find(person => person.id === id).name} is already in the phonebook.Do you want to replace the old number with a new one ? `)) {
             const numberObject = {
                 name: newName,
                 number: newNumber
@@ -79,6 +91,7 @@ const App = () => {
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={notificationMessage} />
             <Filter filter={filter} handleFilterChange={handleFilterChange} />
             <h2>Add a new</h2>
             <PersonForm addNumber={addNumber} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
