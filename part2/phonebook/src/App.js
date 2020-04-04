@@ -48,7 +48,9 @@ const App = () => {
                     setNotification(`added ${returnedPerson.name}`, false)
                 })
                 .catch(error => {
-                    setNotification(`Information of ${numberObject.name} has already been removed from server`, true)
+                    console.log(error.response.data.error);
+                    setNotification(error.response.data.error, true)
+                    //setNotification(`Information of ${numberObject.name} has already been removed from server`, true)
                 })
         } else {
             updateEntry(persons.find(person => person.name === newName).id)
