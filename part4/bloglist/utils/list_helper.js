@@ -8,6 +8,22 @@ const totalLikes = (blogs) => {
     }, 0)
 }
 
-module.exports = {
-    dummy, totalLikes
+const favoriteBlog = (blogs) => {
+    if (blogs.length === 0) {
+        return {}
+    }
+
+    const mostLikes = blogs.reduce((prev, current) => {
+        return (prev.likes > current.likes) ? prev : current
+    })
+    delete mostLikes.url
+    delete mostLikes._id
+    delete mostLikes.__v
+
+    return mostLikes
 }
+
+module.exports = {
+    dummy, totalLikes, favoriteBlog
+}
+
