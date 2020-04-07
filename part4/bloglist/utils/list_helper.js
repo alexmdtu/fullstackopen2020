@@ -32,8 +32,8 @@ const mostBlogs = (blogs) => {
 
     const blogsOrdered = _.chain(blogs)
         .countBy('author')
-        .map((val, key) => {
-            return { author: key, blogs: val }
+        .map((val, name) => {
+            return { author: name, blogs: val }
         })
         .orderBy('blogs', 'desc')
         .head()
