@@ -32,11 +32,14 @@ const mostBlogs = (blogs) => {
 
     const blogsOrdered = _.chain(blogs)
         .countBy('author')
-        .toPairs()
+        .map((val, key) => {
+            return { author: key, blogs: val }
+        })
+        .orderBy('blogs', 'desc')
         .head()
         .value()
 
-    return { author: blogsOrdered[0], blogs: blogsOrdered[1] }
+    return blogsOrdered
 }
 
 module.exports = {
