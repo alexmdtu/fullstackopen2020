@@ -26,10 +26,6 @@ const favoriteBlog = (blogs) => {
 }
 
 const mostBlogs = (blogs) => {
-    if (blogs.length === 0) {
-        return {}
-    }
-
     const author = _.chain(blogs)
         .countBy('author')
         .map((val, name) => {
@@ -39,14 +35,10 @@ const mostBlogs = (blogs) => {
         .head()
         .value()
 
-    return author
+    return author ? author : {}
 }
 
 const mostLikes = (blogs) => {
-    if (blogs.length === 0) {
-        return {}
-    }
-
     const author = _.chain(blogs)
         .maxBy('likes')
         .pick(['author', 'likes'])
