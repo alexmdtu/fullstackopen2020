@@ -56,7 +56,7 @@ test('a valid blog can be added ', async () => {
     )
 })
 
-test('a blog without likes property still gets added ', async () => {
+test('a blog without likes property still gets added', async () => {
     const newBlog = {
         title: 'A blog missing likes property',
         author: 'Alex',
@@ -80,6 +80,22 @@ test('a blog without likes property still gets added ', async () => {
     const likes = blogsAtEnd.map(n => n.likes)
     expect(likes).toContain(0)
 })
+
+test('note without content is not added', async () => {
+    const newBlog = {
+        author: 'Alex'
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
 
 afterAll(() => {
     mongoose.connection.close()
