@@ -27,10 +27,35 @@ test('all blogs are returned', async () => {
     expect(response.body).toHaveLength(helper.initialBlogs.length)
 })
 
-test('blogs have default _id property', async () => {
+test('blogs have default id property', async () => {
     const response = await api.get('/api/blogs')
     const ids = response.body.map(blog => blog.id)
     ids.forEach(id => expect(id).toBeDefined())
+})
+
+test('a valid blog can be added ', async () => {
+    const newBlog = {
+        title: 'Adding a new blog',
+        author: 'Alex',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        likes: 2000,
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+    const contents = blogsAtEnd.map(n => n.title)
+    expect(contents).toContain(
+        'Adding a new blog'
+    )
 })
 
 afterAll(() => {
