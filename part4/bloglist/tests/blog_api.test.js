@@ -9,23 +9,14 @@ const api = supertest(app)
 
 
 let validToken = ''
-let blogWithUser = {}
 
-beforeAll(async () => {
+beforeEach(async () => {
     await User.deleteMany({})
 
     const passwordHash = await bcrypt.hash('secret', 10)
     const user = new User({ username: 'atu', name: 'Alex', passwordHash })
 
     await user.save()
-
-    blogWithUser = {
-        title: 'Test',
-        author: 'Alex',
-        url: 'www.test.com',
-        likes: 10,
-        user: user
-    }
 
     const response = await api
         .post('/api/login')
@@ -35,13 +26,12 @@ beforeAll(async () => {
         })
 
     validToken = response.body.token
-})
 
-beforeEach(async () => {
     await Blog.deleteMany({})
 
     for (let blog of helper.initialBlogs) {
-        let blogObject = new Blog(blog)
+        const blogToSave = { ...blog, user: user }
+        let blogObject = new Blog(blogToSave)
         await blogObject.save()
     }
 })
@@ -151,10 +141,8 @@ test('note without content is not added', async () => {
 
 describe('deletion of a blog post', () => {
     test('succeeds with status code 204 if id is valid', async () => {
-        const blogToSave = new Blog(blogWithUser)
-        await blogToSave.save()
         const blogsAtStart = await helper.blogsInDb()
-        const blogsToDelete = blogsAtStart[blogsAtStart.length - 1]
+        const blogsToDelete = blogsAtStart[0]
 
         await api
             .delete(`/api/blogs/${blogsToDelete.id}`)
@@ -164,7 +152,7 @@ describe('deletion of a blog post', () => {
         const blogsAtEnd = await helper.blogsInDb()
 
         expect(blogsAtEnd.length).toBe(
-            helper.initialBlogs.length
+            helper.initialBlogs.length - 1
         )
 
         const titles = blogsAtEnd.map(r => r.title)
