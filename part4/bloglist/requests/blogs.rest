@@ -1,18 +1,18 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphbiIsImlkIjoiNWYzMTU4YjFlZmEzNDcwNWY1MzJjODFlIiwiaWF0IjoxNTk3MDcxNTcwfQ.j7NbGKaGO1-1PBayFt9blqpTr2pwHy3lDoce7hOG5Ck
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dSIsImlkIjoiNWYzM2NjZTczMGMxMTYwZGE2MGM1YTg1IiwiaWF0IjoxNTk3MjMwMzI2fQ.ZQLC4K1xnB42G2KM4MLwpEcE51sKeeNdyLlOXKqNbtA
 
 {
     "title": "Authorized blog",
-    "author": "Jan",
+    "author": "Alex",
     "url": "http://www.test.com",
     "likes": 10
 }
 
 ###
-POST http://localhost:3003/api/blogs
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dSIsImlkIjoiNWYzMTU4ZGRlZmEzNDcwNWY1MzJjODFmIiwiaWF0IjoxNTk3MDczMTgzfQ.svBYe33JTtTJHzFCwyPVCIEzv3MUMjRpIBDhBTnXDxU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dSIsImlkIjoiNWYzM2NjZTczMGMxMTYwZGE2MGM1YTg1IiwiaWF0IjoxNTk3MjMwMzI2fQ.ZQLC4K1xnB42G2KM4MLwpEcE51sKeeNdyLlOXKqNbtA
 
 {
     "title": "My blog",
@@ -23,6 +23,6 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0d
 
 ###
 
-DELETE http://localhost:3003/api/blogs/5f316794633bb30bce8b9a67
+DELETE http://localhost:3001/api/blogs/5f316794633bb30bce8b9a67
 Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF0dSIsImlkIjoiNWYzMTU4ZGRlZmEzNDcwNWY1MzJjODFmIiwiaWF0IjoxNTk3MDczMTgzfQ.svBYe33JTtTJHzFCwyPVCIEzv3MUMjRpIBDhBTnXDxU
