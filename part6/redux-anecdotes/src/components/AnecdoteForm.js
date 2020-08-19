@@ -12,7 +12,6 @@ const AnecdoteForm = (props) => {
     dispatch(createAnecdote(content))
   }
 
-
   return (
     <div>
       <h2>create new</h2>
