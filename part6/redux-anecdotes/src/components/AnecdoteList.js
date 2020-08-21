@@ -15,9 +15,9 @@ const AnecdoteList = (props) => {
         }, 5000)
     }
 
-    const voteOnAnecdote = (id, content) => {
-        dispatch(vote(id))
-        showNotification(content)
+    const voteOnAnecdote = (anecdote) => {
+        dispatch(vote(anecdote))
+        showNotification(anecdote.content)
     }
 
     return (
@@ -31,7 +31,7 @@ const AnecdoteList = (props) => {
                     </div>
                     <div>
                         has {anecdote.votes}
-                        <button onClick={() => voteOnAnecdote(anecdote.id, anecdote.content)}>vote</button>
+                        <button onClick={() => voteOnAnecdote(anecdote)}>vote</button>
                     </div>
                 </div>
             )
