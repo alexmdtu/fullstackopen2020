@@ -87,9 +87,9 @@ const CreateNew = (props) => {
   }
 
   const reset = () => {
-    content.reset()
-    author.reset()
-    info.reset()
+    content.onChange(null)
+    author.onChange(null)
+    info.onChange(null)
   }
 
   return (
@@ -109,7 +109,7 @@ const CreateNew = (props) => {
           <input {...info} />
         </div>
         <button>create</button>
-        <input type="reset" onClick={reset} />
+        <button type="reset" onClick={reset}>reset</button>
       </form>
     </div>
   )
