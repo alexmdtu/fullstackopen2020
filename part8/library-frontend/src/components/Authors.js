@@ -2,42 +2,7 @@ import React, { useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { ALL_AUTHORS, EDIT_BORN } from '../queries'
 
-const Authors = (props) => {
-  const [name, setName] = useState('')
-  const [born, setBorn] = useState('')
-
-  const result = useQuery(ALL_AUTHORS)
-
-  const [editAuthor] = useMutation(EDIT_BORN, {
-    refetchQueries: [{ query: ALL_AUTHORS }],
-    onError: (error) => {
-      console.log(error)
-    }
-  })
-
-  if (!props.show) {
-    return null
-  }
-
-  if (result.loading) {
-    return <div>loading...</div>
-  }
-
-  const authors = result.data.allAuthors
-
-  const submit = async (event) => {
-    event.preventDefault()
-
-    const bornInt = parseInt(born)
-
-    editAuthor({
-      variables: { name, bornInt }
-    })
-
-    setName('')
-    setBorn('')
-  }
-
+const AuthorList = ({ authors }) => {
   return (
     <div>
       <h2>authors</h2>
@@ -61,6 +26,36 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
+    </div>
+  )
+}
+
+const EditAuthorForm = ({ authors }) => {
+  const [name, setName] = useState('')
+  const [born, setBorn] = useState('')
+
+  const [editAuthor] = useMutation(EDIT_BORN, {
+    refetchQueries: [{ query: ALL_AUTHORS }],
+    onError: (error) => {
+      console.log(error)
+    }
+  })
+
+  const submit = async (event) => {
+    event.preventDefault()
+
+    const bornInt = parseInt(born)
+
+    editAuthor({
+      variables: { name, bornInt }
+    })
+
+    setName('')
+    setBorn('')
+  }
+
+  return (
+    <div>
       <h3>Set birthyear</h3>
       <form onSubmit={submit}>
         <div>
@@ -76,6 +71,27 @@ const Authors = (props) => {
         </div>
         <button type='submit'>update author</button>
       </form>
+    </div>
+  )
+}
+
+const Authors = ({ show, token }) => {
+  const result = useQuery(ALL_AUTHORS)
+
+  if (!show) {
+    return null
+  }
+
+  if (result.loading) {
+    return <div>loading...</div>
+  }
+
+  const authors = result.data.allAuthors
+
+  return (
+    <div>
+      <AuthorList authors={authors} />
+      {token ? <EditAuthorForm authors={authors} /> : null}
     </div>
   )
 }
