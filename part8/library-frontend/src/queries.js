@@ -58,9 +58,18 @@ export const EDIT_BORN = gql`
 `
 
 export const LOGIN = gql`
-  mutation logn($username: String!, $password: String!) {
+  mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
       value
+    }
+  }
+`
+
+export const ME = gql`
+  query {
+    me {
+      username
+      favoriteGenre
     }
   }
 `
