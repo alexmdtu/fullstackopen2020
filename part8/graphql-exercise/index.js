@@ -170,14 +170,29 @@ const resolvers = {
           born: null
         })
         console.log('saving new author')
-        newAuthor.save()
+        try {
+          await newAuthor.save()
+        } catch (error) {
+          throw new UserInputError(error.message, { invalidArgs: args })
+        }
+
         const book = new Book({ ...args, author: newAuthor })
-        return book.save()
+        try {
+          await book.save()
+        } catch (error) {
+          throw new UserInputError(error.message, { invalidArgs: args })
+        }
+        return book
       }
       // save book
       console.log('saving new book')
       const book = new Book({ ...args, author: author })
-      return book.save()
+      try {
+        await book.save()
+      } catch (error) {
+        throw new UserInputError(error.message, { invalidArgs: args })
+      }
+      return book
     },
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
