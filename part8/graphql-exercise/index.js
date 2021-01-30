@@ -123,7 +123,6 @@ const resolvers = {
           name: args.author,
           born: null
         })
-        console.log('saving new author')
         try {
           await newAuthor.save()
         } catch (error) {
@@ -141,7 +140,6 @@ const resolvers = {
         return book
       }
       // save book
-      console.log('saving new book')
       const book = new Book({ ...args, author: author })
       try {
         await book.save()
