@@ -38,7 +38,7 @@ const Books = ({ show }) => {
               published
             </th>
           </tr>
-          {books.map(b => <Book key={b.title} book={b} genreFilter={genreFilter} />)}
+          {books.map(b => <Book key={b.id} book={b} genreFilter={genreFilter} />)}
         </tbody>
       </table>
       {genreArray.map(g =>

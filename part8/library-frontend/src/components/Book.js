@@ -6,7 +6,7 @@ const Book = ({ book, genreFilter }) => {
   }
 
   return (
-    <tr key={book.title}>
+    <tr key={book.id}>
       <td>{book.title}</td>
       <td>{book.author.name}</td>
       <td>{book.published}</td>
