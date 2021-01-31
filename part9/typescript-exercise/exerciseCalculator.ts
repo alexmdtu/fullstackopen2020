@@ -13,6 +13,32 @@ interface FullRating {
   ratingDescription: string
 }
 
+interface Workout {
+  dailyExerciseHours: Array<number>,
+  target: number
+}
+
+const parseWorkoutArguments = (args: Array<string>): Workout => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  args.splice(0, 2);
+  args.map(n => {
+    if (isNaN(Number(n))) {
+      throw new Error('Provided values were not numbers!');
+    }
+  });
+
+  const target = Number(args[0]);
+  args.splice(0, 1);
+  var workoutHours: Array<number> = [];
+  args.map(n => workoutHours.push(Number(n)));
+
+
+  return {
+    target: target,
+    dailyExerciseHours: workoutHours
+  };
+}
+
 const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: number): WorkoutStats => {
   const periodLength = dailyExerciseHours.length;
   const trainingDays = dailyExerciseHours.filter(n => n !== 0).length;
@@ -46,4 +72,9 @@ const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: num
   };
 }
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2));
+try {
+  const { dailyExerciseHours, target } = parseWorkoutArguments(process.argv);
+  console.log(calculateExercises(dailyExerciseHours, target));
+} catch (e) {
+  console.log('Error, something bad happened, message: ', e.message)
+}
