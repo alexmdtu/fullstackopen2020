@@ -17,7 +17,7 @@ const parseBmiArguments = (args: Array<string>): bmiValues => {
   }
 }
 
-const calculateBmi = (height: number, weight: number): string => {
+export const calculateBmi = (height: number, weight: number): string => {
   const heightInMeters = height / 100;
   const bmi = weight / (heightInMeters * heightInMeters);
   switch (true) {
@@ -30,7 +30,7 @@ const calculateBmi = (height: number, weight: number): string => {
     case bmi >= 30:
       return 'Obese';
     default:
-      throw new Error('Something is wrong with the arguments.');
+      throw new Error('malformatted parameters');
   }
 }
 
