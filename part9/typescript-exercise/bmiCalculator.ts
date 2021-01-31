@@ -15,7 +15,7 @@ const parseBmiArguments = (args: Array<string>): bmiValues => {
   } else {
     throw new Error('Provided values were not numbers!');
   }
-}
+};
 
 export const calculateBmi = (height: number, weight: number): string => {
   const heightInMeters = height / 100;
@@ -32,11 +32,12 @@ export const calculateBmi = (height: number, weight: number): string => {
     default:
       throw new Error('malformatted parameters');
   }
-}
+};
 
 try {
   const { height, weight } = parseBmiArguments(process.argv);
   console.log(calculateBmi(height, weight));
 } catch (e) {
-  console.log('Error, something bad happened, message: ', e.message)
+  const error = e as Error;
+  console.log('Error, something bad happened, message: ', error.message);
 }

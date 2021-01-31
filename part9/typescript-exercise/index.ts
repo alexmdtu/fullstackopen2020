@@ -1,5 +1,5 @@
 import express from 'express';
-import { calculateBmi } from './bmiCalculator'
+import { calculateBmi } from './bmiCalculator';
 
 const app = express();
 
@@ -18,7 +18,8 @@ app.get('/bmi', (req, res) => {
       bmi: result
     });
   } catch (e) {
-    res.status(400).send({ error: e.message });
+    const error = e as Error;
+    res.status(400).send({ error: error.message });
   }
 
 

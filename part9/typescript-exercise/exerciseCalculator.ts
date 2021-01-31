@@ -29,7 +29,7 @@ const parseWorkoutArguments = (args: Array<string>): Workout => {
 
   const target = Number(args[0]);
   args.splice(0, 1);
-  var workoutHours: Array<number> = [];
+  const workoutHours: Array<number> = [];
   args.map(n => workoutHours.push(Number(n)));
 
 
@@ -37,7 +37,7 @@ const parseWorkoutArguments = (args: Array<string>): Workout => {
     target: target,
     dailyExerciseHours: workoutHours
   };
-}
+};
 
 const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: number): WorkoutStats => {
   const periodLength = dailyExerciseHours.length;
@@ -57,7 +57,7 @@ const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: num
       default:
         throw new Error('Something went wrong when calculating the rating.');
     }
-  }
+  };
 
   const rating = fullRating();
 
@@ -70,11 +70,12 @@ const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: num
     target: targetAmount,
     average: average
   };
-}
+};
 
 try {
   const { dailyExerciseHours, target } = parseWorkoutArguments(process.argv);
   console.log(calculateExercises(dailyExerciseHours, target));
 } catch (e) {
-  console.log('Error, something bad happened, message: ', e.message)
+  const error = e as Error;
+  console.log('Error, something bad happened, message: ', error.message);
 }
