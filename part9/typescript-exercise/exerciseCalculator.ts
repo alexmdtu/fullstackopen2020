@@ -39,7 +39,7 @@ const parseWorkoutArguments = (args: Array<string>): Workout => {
   };
 };
 
-const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: number): WorkoutStats => {
+export const calculateExercises = (dailyExerciseHours: Array<number>, targetAmount: number): WorkoutStats => {
   const periodLength = dailyExerciseHours.length;
   const trainingDays = dailyExerciseHours.filter(n => n !== 0).length;
   const average = dailyExerciseHours.reduce((acc, val) => acc + val, 0) / periodLength;
@@ -76,6 +76,6 @@ try {
   const { dailyExerciseHours, target } = parseWorkoutArguments(process.argv);
   console.log(calculateExercises(dailyExerciseHours, target));
 } catch (e) {
-  const error = e as Error;
-  console.log('Error, something bad happened, message: ', error.message);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  console.log('Error, something bad happened, message: ', e.message);
 }
