@@ -6,5 +6,37 @@ Content-Type: application/json
   "dateOfBirth": "1991-08-08",
   "gender": "male",
   "occupation": "Student",
-  "ssn": "01234-423K"
+  "ssn": "01234-423K",
+  "entries": []
+}
+
+###
+
+POST http://localhost:3001/api/patients/d2773598-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "2019-10-20",
+  "specialist": "MD House",
+  "type": "HealthCheck",
+  "description": "Yearly control visit. Cholesterol levels back to normal.",
+  "healthCheckRating": 0
+}
+
+###
+
+POST http://localhost:3001/api/patients/d2773598-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "date": "2019-10-20",
+  "specialist": "MD House",
+  "type": "OccupationalHealthcare",
+  "employerName": "HyPD",
+  "diagnosisCodes": ["Z57.1", "Z74.3", "M51.2"],
+  "description": "Yearly control visit. Cholesterol levels back to normal.",
+  "sickLeave": {
+          "startDate": "2019-08-05",
+          "endDate": "2019-08-28"
+        }
 }

@@ -31,7 +31,6 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
-
 interface BaseEntry {
   id: string;
   description: string;
