@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NewPatient, Gender } from './types';
+import { NewPatient, Gender, Entry } from './types';
 
 const toNewPatient = (object: any): NewPatient => {
   return {
@@ -11,7 +11,7 @@ const toNewPatient = (object: any): NewPatient => {
     ssn: parseString(object.ssn),
     gender: parseGender(object.gender),
     occupation: parseString(object.occupation),
-    entries: []
+    entries: parseEntries(object.entries)
   };
 };
 
@@ -47,6 +47,27 @@ const parseGender = (gender: any): Gender => {
     throw new Error('Incorrect or missing gender ' + gender);
   }
   return gender;
+};
+
+const isEntry = (entry: any): entry is Entry => {
+  return entry !== undefined;
+};
+
+const isEntries = (entries: any[]): entries is Entry[] => {
+  let result = true;
+  entries.map(e => {
+    if (!isEntry(e)) {
+      result = false;
+    }
+  });
+  return result;
+};
+
+const parseEntries = (entries: any): Entry[] => {
+  if (!entries || !isEntries(entries)) {
+    throw new Error('Incorrect or missing entries ' + entries);
+  }
+  return entries;
 };
 
 export default toNewPatient;
