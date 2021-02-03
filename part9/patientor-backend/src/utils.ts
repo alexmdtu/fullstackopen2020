@@ -37,8 +37,8 @@ export const toNewEntry = (object: any): Entry => {
         ...baseEntry,
         type: 'Hospital',
         discharge: {
-          date: parseDate(object.discharge.date),
-          criteria: parseDate(object.discharge.criteria)
+          date: parseDate(object.dischargeDate),
+          criteria: parseDate(object.dischargeCriteria)
         }
       };
     case 'OccupationalHealthcare':
@@ -47,8 +47,8 @@ export const toNewEntry = (object: any): Entry => {
         type: 'OccupationalHealthcare',
         employerName: parseString(object.employerName),
         sickLeave: {
-          startDate: parseDate(object.sickLeave.startDate),
-          endDate: parseDate(object.sickLeave.endDate)
+          startDate: parseDate(object.sickLeaveStartDate),
+          endDate: parseDate(object.sickLeaveEndDate)
         }
       };
     default:
@@ -133,7 +133,6 @@ const parseEntries = (entries: any): Entry[] => {
 };
 
 const isHealthCheckRating = (param: any): param is HealthCheckRating => {
-  console.log(Object.values(HealthCheckRating));
   return Object.values(HealthCheckRating).includes(param);
 };
 
